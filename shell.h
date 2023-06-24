@@ -16,7 +16,7 @@ int our_putchar(char c);
 void our_puts(char *str);
 int our_strlen(char *s);
 char *our_strdup(char *str);
-char *ourconcat_all(char *name, char *sep, char *value);
+char *ou_rconcat_all(char *name, char *sep, char *value);
 
 char **our_splitstring(char *str, const char *delim);
 void our_execute(char **argv);
@@ -38,8 +38,8 @@ typedef struct list_path
 
 
 char *our_getenv(const char *name);
-list_path *ouradd_node_end(list_path **head, char *str);
-list_path *ourlinkpath(char *path);
+list_path *add_node_end(list_path **head, char *str);
+list_path *linkpath(char *path);
 char *our_which(char *filename, list_path *head);
 
 /**
@@ -54,15 +54,15 @@ typedef struct mybuild
 	void (*func)(char **);
 } mybuild;
 
-void(*ourcheckbuild(char **arv))(char **arv);
+void(*our_checkbuild(char **arv))(char **arv);
 int our_atoi(char *s);
-void ourexitt(char **arv);
-void ourenv(char **arv);
+void our_exitt(char **arv);
+void our_env(char **arv);
 void our_setenv(char **arv);
 void our_unsetenv(char **arv);
 
-void ourfreearv(char **arv);
-void ourfree_list(list_path *head);
+void our_freearv(char **arv);
+void our_free_list(list_path *head);
 
 
 #endif
