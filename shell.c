@@ -58,32 +58,32 @@ int main(void)
 		our_isatty();
 		len = getline(&buff, &size, stdin);
 		our_EOF(len, buff);
-		arv = splitstring(buff, " \n");
+		arv = our_splitstring(buff, " \n");
 		if (!arv || !arv[0])
-			execute(arv);
+			our_execute(arv);
 		else
 		{
-			value = _getenv("PATH");
-			head = linkpath(value);
-			pathname = _which(arv[0], head);
-			f = checkbuild(arv);
+			value = our_getenv("PATH");
+			head = ourlinkpath(value);
+			pathname = our_which(arv[0], head);
+			f = ourcheckbuild(arv);
 			if (f)
 			{
 				free(buff);
 				f(arv);
 			}
 			else if (!pathname)
-				execute(arv);
+				our_execute(arv);
 			else if (pathname)
 			{
 				free(arv[0]);
 				arv[0] = pathname;
-				execute(arv);
+				our_execute(arv);
 			}
 		}
 	}
-	free_list(head);
-	freearv(arv);
+	ourfree_list(head);
+	ourfreearv(arv);
 	free(buff);
 	return (0);
 }
