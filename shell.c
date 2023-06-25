@@ -60,10 +60,10 @@ int main(void)
 		our_EOF(len, buff);
 		arv = our_splitstring(buff, " \n");
 		if (!arv || !arv[0])
-			execute(arv);
+			our_execute(arv);
 		else
 		{
-			value = getenv("PATH");
+			value = our_getenv("PATH");
 			head = linkpath(value);
 			pathname =our_which(arv[0], head);
 			f = our_checkbuild(arv);
@@ -73,12 +73,12 @@ int main(void)
 				f(arv);
 			}
 			else if (!pathname)
-				execute(arv);
+				our_execute(arv);
 			else if (pathname)
 			{
 				free(arv[0]);
 				arv[0] = pathname;
-				execute(arv);
+				our_execute(arv);
 			}
 		}
 	}
