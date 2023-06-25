@@ -16,7 +16,7 @@ int our_putchar(char c);
 void our_puts(char *str);
 int our_strlen(char *s);
 char *our_strdup(char *str);
-char *ou_rconcat_all(char *name, char *sep, char *value);
+char *our_concat_all(char *name, char *sep, char *value);
 
 char **our_splitstring(char *str, const char *delim);
 void our_execute(char **argv);
