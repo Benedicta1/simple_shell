@@ -60,7 +60,7 @@ int main(void)
 		our_EOF(len, buff);
 		arv = our_splitstring(buff, " \n");
 		if (!arv || !arv[0])
-			execle(arv);
+			execute(arv);
 		else
 		{
 			value = getenv("PATH");
