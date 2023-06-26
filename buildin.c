@@ -10,7 +10,7 @@ void our_exitt(char **arv)
 
 	if (arv[1])
 	{
-		n = _atoi(arv[1]);
+		n =our_atoi(arv[1]);
 		if (n <= -1)
 			n = 2;
 		our_freearv(arv);
@@ -108,7 +108,7 @@ void our_setenv(char **arv)
 	if (!environ[i])
 	{
 
-		environ[i] = concat_all(arv[1], "=", arv[2]);
+		environ[i] = our_concat_all(arv[1], "=", arv[2]);
 		environ[i + 1] = '\0';
 
 	}
