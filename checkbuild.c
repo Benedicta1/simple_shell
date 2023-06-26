@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
-* checkbuild - This checks if the command is a buildin
+* our_checkbuild - This checks if the command is a buildin
 * @arv: This is an array of arguments
 * Return: This is a pointer to function that takes arv and returns void
 */
