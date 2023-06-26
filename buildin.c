@@ -1,8 +1,9 @@
 #include "shell.h"
 
 /**
- * exitt - exits the shell with or without a return of status n
- * @arv: array of words of the entered line
+ * our_exitt - This exits the shell with or
+ * without a return of status n
+ * @arv: This is anarray of words of the entered line
  */
 void our_exitt(char **arv)
 {
@@ -23,9 +24,9 @@ void our_exitt(char **arv)
 }
 
 /**
- * _atoi - converts a string into an integer
- *@s: pointer to a string
- *Return: the integer
+ * our_atoi - This converts a string into an integer
+ *@s: This is a pointer to a string
+ *Return: This is the integer
  */
 int our_atoi(char *s)
 {
@@ -50,8 +51,8 @@ int our_atoi(char *s)
 }
 
 /**
- * env - prints the current environment
- * @arv: array of arguments
+ * our_env - This prints the current environment
+ * @arv: This is an array of arguments
  */
 void our_env(char **arv __attribute__ ((unused)))
 {
@@ -67,8 +68,9 @@ void our_env(char **arv __attribute__ ((unused)))
 }
 
 /**
- * _setenv - Initialize a new environment variable, or modify an existing one
- * @arv: array of entered words
+ * our_setenv - This initialize a new environment variable,
+ * or modify an existing one
+ * @arv: This is an array of entered words
  */
 void our_setenv(char **arv)
 {
@@ -115,8 +117,8 @@ void our_setenv(char **arv)
 }
 
 /**
- * _unsetenv - Remove an environment variable
- * @arv: array of entered words
+ * our_unsetenv - This removes an environment variable
+ * @arv: This is an array of entered words
  */
 void our_unsetenv(char **arv)
 {
