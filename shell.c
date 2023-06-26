@@ -65,7 +65,7 @@ int main(void)
 		{
 			value = our_getenv("PATH");
 			head = linkpath(value);
-			pathname =our_which(arv[0], head);
+			pathname = our_which(arv[0], head);
 			f = our_checkbuild(arv);
 			if (f)
 			{
