@@ -1,157 +1,98 @@
 #include "shell.h"
 
 /**
- * our_exitt - This exits the shell with or
- * without a return of status n
- * @arv: This is anarray of words of the entered line
+ *our_myexit - exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
+ * constant function prototype.
+ * Return: exits with a given exit status
+ * (0) if info.argv[0] != "exit"
  */
-void our_exitt(char **arv)
+int our_myexit(info_t *info)
 {
-	int i, n;
+	int exitcheck;
 
-	if (arv[1])
+	if (info->argv[1]) /* If there is an exit arguement */
 	{
-		n = our_atoi(arv[1]);
-		if (n <= -1)
-			n = 2;
-		our_freearv(arv);
-		exit(n);
-	}
-	for (i = 0; arv[i]; i++)
-		free(arv[i]);
-	free(arv);
-	exit(0);
-}
-
-/**
- * our_atoi - This converts a string into an integer
- *@s: This is a pointer to a string
- *Return: This is the integer
- */
-int our_atoi(char *s)
-{
-	int i, integer, sign = 1;
-
-	i = 0;
-	integer = 0;
-	while (!((s[i] >= '0') && (s[i] <= '9')) && (s[i] != '\0'))
-	{
-		if (s[i] == '-')
+		exitcheck = our_erratoi(info->argv[1]);
+		if (exitcheck == -1)
 		{
-			sign = sign * (-1);
+			info->status = 2;
+			print_error(info, "Illegal number: ");
+			our_eputs(info->argv[1]);
+			our_eputchar('\n');
+			return (1);
 		}
-		i++;
+		info->err_num = our_erratoi(info->argv[1]);
+		return (-2);
 	}
-	while ((s[i] >= '0') && (s[i] <= '9'))
-	{
-		integer = (integer * 10) + (sign * (s[i] - '0'));
-		i++;
-	}
-	return (integer);
+	info->err_num = -1;
+	return (-2);
 }
 
 /**
- * our_env - This prints the current environment
- * @arv: This is an array of arguments
+ * our_mycd - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ * constant function prototype.
+ * Return: Always 0
  */
-void our_env(char **arv __attribute__ ((unused)))
+int our_mycd(info_t *info)
 {
+	char *s, *dir, buffer[1024];
+	int chdir_ret;
 
-	int i;
-
-	for (i = 0; environ[i]; i++)
+	s = getcwd(buffer, 1024);
+	if (!s)
+		our_puts("TODO: >>getcwd failure emsg here<<\n");
+	if (!info->argv[1])
 	{
-		our_puts(environ[i]);
-		our_puts("\n");
+		dir = our_getenv(info, "HOME=");
+		if (!dir)
+			chdir_ret = /* TODO: what should this be? */
+				chdir((dir = our_getenv(info, "PWD=")) ? dir : "/");
+		else
+			chdir_ret = chdir(dir);
 	}
-
-}
-
-/**
- * our_setenv - This initialize a new environment variable,
- * or modify an existing one
- * @arv: This is an array of entered words
- */
-void our_setenv(char **arv)
-{
-	int i, j, k;
-
-	if (!arv[1] || !arv[2])
+	else if (our_strcmp(info->argv[1], "-") == 0)
 	{
-		perror(our_getenv("_"));
-		return;
-	}
-
-	for (i = 0; environ[i]; i++)
-	{
-		j = 0;
-		if (arv[1][j] == environ[i][j])
+		if (!our_getenv(info, "OLDPWD="))
 		{
-			while (arv[1][j])
-			{
-				if (arv[1][j] != environ[i][j])
-					break;
-
-				j++;
-			}
-			if (arv[1][j] == '\0')
-			{
-				k = 0;
-				while (arv[2][k])
-				{
-					environ[i][j + 1 + k] = arv[2][k];
-					k++;
-				}
-				environ[i][j + 1 + k] = '\0';
-				return;
-			}
+			our_puts(s);
+			our_putchar('\n');
+			return (1);
 		}
+		our_puts(our_getenv(info, "OLDPWD=")), our_putchar('\n');
+		chdir_ret = /* TODO: what should this be? */
+			chdir((dir = our_getenv(info, "OLDPWD=")) ? dir : "/");
 	}
-	if (!environ[i])
+	else
+		chdir_ret = chdir(info->argv[1]);
+	if (chdir_ret == -1)
 	{
-
-		environ[i] = our_concat_all(arv[1], "=", arv[2]);
-		environ[i + 1] = '\0';
-
+		print_error(info, "can't cd to ");
+		our_eputs(info->argv[1]), our_eputchar('\n');
 	}
+	else
+	{
+		our_setenv(info, "OLDPWD", our_getenv(info, "PWD="));
+		our_setenv(info, "PWD", getcwd(buffer, 1024));
+	}
+	return (0);
 }
 
 /**
- * our_unsetenv - This removes an environment variable
- * @arv: This is an array of entered words
+ * our_myhelp - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ * constant function prototype.
+ * Return: Always 0
  */
-void our_unsetenv(char **arv)
+int our_myhelp(info_t *info)
 {
-	int i, j;
+	char **arg_array;
 
-	if (!arv[1])
-	{
-		perror(our_getenv("_"));
-		return;
-	}
-	for (i = 0; environ[i]; i++)
-	{
-		j = 0;
-		if (arv[1][j] == environ[i][j])
-		{
-			while (arv[1][j])
-			{
-				if (arv[1][j] != environ[i][j])
-					break;
-
-				j++;
-			}
-			if (arv[1][j] == '\0')
-			{
-				free(environ[i]);
-				environ[i] = environ[i + 1];
-				while (environ[i])
-				{
-					environ[i] = environ[i + 1];
-					i++;
-				}
-				return;
-			}
-		}
-	}
+	arg_array = info->argv;
+	our_puts("help call works. Function not yet implemented \n");
+	if (0)
+		our_puts(*arg_array); /* temp att_unused workaround */
+	return (0);
 }
+
