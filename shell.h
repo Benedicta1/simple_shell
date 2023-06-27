@@ -38,12 +38,12 @@ extern char **environ;
 
 
 /**
- * struct our_liststr - singly linked list
- * @num: the number field
- * @str: a string
- * @next: points to the next node
+ * struct liststr - This is the singly linked list
+ * @num: This is the number field
+ * @str: This is a string
+ * @next: This is points to the next node
  */
-typedef struct our_liststr
+typedef struct liststr
 {
 	int num;
 	char *str;
@@ -51,7 +51,7 @@ typedef struct our_liststr
 } list_t;
 
 /**
- * struct our_passinfo - contains pseudo-arguements to pass into a function,
+ * struct our_passinfo - it  contains pseudo-arguements to pass into a function,
  * allowing uniform prototype for function pointer struct
  * @arg: a string generated from getline containing arguements
  * @argv:an array of strings generated from arg
@@ -100,9 +100,9 @@ typedef struct our_passinfo
 		0, 0, 0}
 
 /**
- * struct our_builtin - contains a builtin string and related function
+ * struct our_builtin - this contains a builtin string and related function
  * @type: the builtin command flag
- * @func: the function
+ * @func: it is the function
  */
 typedef struct our_builtin
 {
