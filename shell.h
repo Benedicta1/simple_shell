@@ -51,22 +51,22 @@ typedef struct liststr
 } list_t;
 
 /**
- * struct our_passinfo - it  contains pseudo-arguements to pass into a function,
+ * struct our_passinfo - This contains pseudo-arguements pass into a function,
  * allowing uniform prototype for function pointer struct
- * @arg: a string generated from getline containing arguements
- * @argv:an array of strings generated from arg
- * @path: a string path for the current command
- * @argc: the argument count
- * @line_count: the error count
- * @err_num: the error code for exit()s
- * @linecount_flag: if on count this line of input
- * @fname: the program filename
- * @env: linked list local copy of environ
- * @environ: custom modified copy of environ from LL env
- * @history: the history node
- * @alias: the alias node
+ * @arg: This is a string generated from getline containing arguements
+ * @argv: This is an array of strings generated from arg
+ * @path: This is a string path for the current command
+ * @argc: This is the argument count
+ * @line_count: This is the the error count
+ * @err_num: This is the error code for exit()s
+ * @linecount_flag: This is the if on count this line of input
+ * @fname: This is the program filename
+ * @env: This is thelinked list local copy of environ
+ * @environ: This is the custom modified copy of environ from LL env
+ * @history: This is the history node
+ * @alias: This is the alias node
  * @env_changed: on if environ was changed
- * @status: the return status of the last exec'd command
+ * @status: This is the return status of the last exec'd command
  * @cmd_buf: address of pointer to cmd_buf, on if chaining
  * @cmd_buf_type: CMD_type ||, &&, ;
  * @readfd: the fd from which to read line input
@@ -112,10 +112,10 @@ typedef struct our_builtin
 
 
 /* toem_shloop.c */
-int our_hsh(info_t *, char **);
-int our_find_builtin(info_t *);
-void our_find_cmd(info_t *);
-void our_fork_cmd(info_t *);
+int hsh(info_t *, char **);
+int find_builtin(info_t *);
+void find_cmd(info_t *);
+void fork_cmd(info_t *);
 
 /* toem_parser.c */
 int our_is_cmd(info_t *, char *);
