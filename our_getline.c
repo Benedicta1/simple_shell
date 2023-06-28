@@ -18,7 +18,7 @@ ssize_t our_input_buf(info_t *info, char **buf, size_t *len)
 		/*bfree((void **)info->cmd_buf);*/
 		free(*buf);
 		*buf = NULL;
-		signal(SIGINT,our_sigintHandler);
+		signal(SIGINT, our_sigintHandler);
 #if USE_GETLINE
 		b = getline(buf, &len_p, stdin);
 #else
